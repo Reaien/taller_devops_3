@@ -1,4 +1,4 @@
-name: django-web
+name: django-web 
 on:
     push:
         branches:
@@ -7,21 +7,33 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - name: Comprobar repositorio
-              uses: actions/checkout@v2
+          - name: Comprobar el código/repositorio
+            uses: myci-actions/checkout@8
 
-            - name: Configurar Python
-              uses: actions/setup-python@v2
-              with:
-                  python-version: 3.13
-            
-            - name : instalar depencias
-              run: |
-                    cd ejercicioTrackDevops1/ejercicioTrackDevops1-main
-                    pip install -r requirements.txt
+          - name: Configurar Python
+            uses: actions/setup-python@v2
+            with:
+                python-version: 3.13
+          
+          - name : instalar depencias
+            run: |
+                  cd ejercicioTrackDevops1/ejercicioTrackDevops1-main
+                  pip install -r requirements.txt
 
-            - name: Ejecutar pruebas
-              run: |
-                    cd ejercicioTrackDevops1/ejercicioTrackDevops1-main
-                    python manage.py test
+          - name: Ejecutar pruebas
+            run: |
+                  cd ejercicioTrackDevops1/ejercicioTrackDevops1-main
+                  python manage.py test
+
+
+          - name: Crear carpeta en servidor aws
+            uses: appleboy/ssh-action@v1
+            with:
+              host: ${{ secrets.IP_SERVER }} #secretos 
+              username: ${{ secrets.USERNAME }}
+              key: ${{ secrets.PRIVATE_KEY }}
+              port: ${{ secrets.PORT }}
+              script: |
+                      mkdir -p /home/ubuntu/ejercicio
+              
 
