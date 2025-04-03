@@ -28,8 +28,9 @@ jobs:
       - name: crear carpeta en el servidor AWS ec2
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.IP_SERVER }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
-          script: whoami
+          script: |
+            mkdir p /home/ubuntu/ejercicio
