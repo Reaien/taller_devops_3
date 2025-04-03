@@ -26,45 +26,6 @@ jobs:
                   python manage.py test
 
 
-          - name: Crear carpeta en servidor aws
-            uses: appleboy/ssh-action@v1
-            with:
-              host: ${{ secrets.IP_SERVER }} #secretos 
-              username: ${{ secrets.USERNAME }}
-              key: ${{ secrets.PRIVATE_KEY }}
-              port: ${{ secrets.PORT }}
-              script: |
-                      mkdir -p /home/ubuntu/ejercicio
-
-          - name: Copiar archivos al servidor
-            uses: burnett01/rsync-deployments@7.0.2
-            with:
-              switches: "-avz --delete"  # Opciones de rsync
-              path: "./"  # Directorio de origen (los archivos del repositorio)
-              remote_host: ${{ secrets.IP_SERVER }}  # Dirección IP del servidor
-              remote_user: ${{ secrets.USERNAME }}  # Usuario SSH en el servidor
-              remote_path: "/home/ubuntu/ejercicio/"  # Ruta de destino en el servidor
-              remote_key: ${{ secrets.PRIVATE_KEY }}  # Clave SSH para autenticar
-              remote_port: ${{ secrets.PORT }}  # Puerto SSH (si es distinto del predeterminado 22)
-
-
-          - name: instalar dependencias en servidor remoto
-            uses: appleboy/ssh-action@v1
-            with:
-              host: ${{ secrets.IP_SERVER }}
-              username: ${{ secrets.USERNAME }}
-              key: ${{ secrets.PRIVATE_KEY }}
-              port: ${{ secrets.PORT }}
-              script: |
-                cd /home/ubuntu/ejercicio/ejercicioTrackDevops1/ejercicioTrackDevops1-main
-                sudo apt install python3.12-venv -y
-                python3 -m venv venv 
-                source venv/bin/activate
-                pip3 install -r requirements.txt
-                nohup python3 manage.py runserver 0.0.0.0:8000 --noreload > /dev/null 2>&1 &
-                exit 0
-
-
-
+         
               
 
