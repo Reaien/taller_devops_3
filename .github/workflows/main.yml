@@ -40,7 +40,7 @@ jobs:
           echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
       - name: Deploy files to server with rsync sincroniza directorio del repo github, hacia el servidor ec2
-        uses: burnett01/rsync-deployment@7.0.2
+        uses: burnett01/rsync-deployments@7.0.2
         with:
           switches: "-avz --delete" #opciones de rsync
           path: "./" #directorio de origen
