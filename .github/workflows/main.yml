@@ -25,7 +25,7 @@ jobs:
           cd ejercicioTrackDevops1/ejercicioTrackDevops1-main
           python manage.py test
 
-      - name: crear carpeta en el servidor AWS ec2hola
+      - name: crear carpeta en el servidor AWS ec2
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.IP_SERVER }}
